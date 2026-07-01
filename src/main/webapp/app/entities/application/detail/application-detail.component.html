@@ -3,6 +3,8 @@
     <div *ngIf="application">
       <h2 data-cy="applicationDetailsHeading"><span jhiTranslate="portailApp.application.detail.title">Application</span></h2>
 
+      <button (click)="redirect()">REDIRECT</button>
+
       <hr />
 
       <jhi-alert-error></jhi-alert-error>

@@ -19,6 +19,12 @@ export class ApplicationDetailComponent implements OnInit {
     });
   }
 
+  redirect(): void {
+    if (this.application?.url) {
+      window.location.href = this.application.url;
+    }
+  }
+
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
   }
