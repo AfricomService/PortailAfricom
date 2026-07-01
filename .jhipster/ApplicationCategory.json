@@ -1,0 +1,42 @@
+{
+  "name": "ApplicationCategory",
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "nom",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ordreAffichage",
+      "fieldType": "Integer"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "application",
+      "otherEntityRelationshipName": "categorie",
+      "relationshipName": "application"
+    }
+  ],
+  "javadoc": "Catégorie permettant de regrouper les applications\\ndans le tableau de bord (ex: RH, Finance, Support...)",
+  "entityTableName": "application_category",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["portail"],
+  "changelogDate": "20260701094319"
+}

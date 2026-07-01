@@ -1,0 +1,10 @@
+{
+  "portailApp": {
+    "EtatApplication": {
+      "null": "",
+      "ACTIF": "ACTIF",
+      "INACTIF": "INACTIF",
+      "MAINTENANCE": "MAINTENANCE"
+    }
+  }
+}

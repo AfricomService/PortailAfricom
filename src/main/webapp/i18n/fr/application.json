@@ -1,0 +1,36 @@
+{
+  "portailApp": {
+    "application": {
+      "home": {
+        "title": "Applications",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Application",
+        "createOrEditLabel": "Créer ou éditer un Application",
+        "notFound": "Aucun Application trouvé"
+      },
+      "created": "Un nouveau Application a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Application avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Application avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Application {{ id }} ?"
+      },
+      "detail": {
+        "title": "Application"
+      },
+      "id": "ID",
+      "code": "Code",
+      "nom": "Nom",
+      "description": "Description",
+      "url": "Url",
+      "icon": "Icon",
+      "couleur": "Couleur",
+      "ordreAffichage": "Ordre Affichage",
+      "etat": "Etat",
+      "typeAcces": "Type Acces",
+      "dateCreation": "Date Creation",
+      "dateActivation": "Date Activation",
+      "dateDesactivation": "Date Desactivation",
+      "categorie": "Categorie"
+    }
+  }
+}

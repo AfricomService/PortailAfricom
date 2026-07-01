@@ -1,0 +1,115 @@
+<div>
+  <h2 id="page-heading" data-cy="ApplicationHeading">
+    <span jhiTranslate="portailApp.application.home.title">Applications</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="portailApp.application.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-application"
+        [routerLink]="['/application/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="portailApp.application.home.createLabel"> Create a new Application </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="applications?.length === 0">
+    <span jhiTranslate="portailApp.application.home.notFound">No applications found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="applications && applications.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="portailApp.application.code">Code</span></th>
+          <th scope="col"><span jhiTranslate="portailApp.application.nom">Nom</span></th>
+          <th scope="col"><span jhiTranslate="portailApp.application.description">Description</span></th>
+          <th scope="col"><span jhiTranslate="portailApp.application.url">Url</span></th>
+          <th scope="col"><span jhiTranslate="portailApp.application.icon">Icon</span></th>
+          <th scope="col"><span jhiTranslate="portailApp.application.couleur">Couleur</span></th>
+          <th scope="col"><span jhiTranslate="portailApp.application.ordreAffichage">Ordre Affichage</span></th>
+          <th scope="col"><span jhiTranslate="portailApp.application.etat">Etat</span></th>
+          <th scope="col"><span jhiTranslate="portailApp.application.typeAcces">Type Acces</span></th>
+          <th scope="col"><span jhiTranslate="portailApp.application.dateCreation">Date Creation</span></th>
+          <th scope="col"><span jhiTranslate="portailApp.application.dateActivation">Date Activation</span></th>
+          <th scope="col"><span jhiTranslate="portailApp.application.dateDesactivation">Date Desactivation</span></th>
+          <th scope="col"><span jhiTranslate="portailApp.application.categorie">Categorie</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let application of applications; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/application', application.id, 'view']">{{ application.id }}</a>
+          </td>
+          <td>{{ application.code }}</td>
+          <td>{{ application.nom }}</td>
+          <td>{{ application.description }}</td>
+          <td>{{ application.url }}</td>
+          <td>
+            <a *ngIf="application.icon" (click)="openFile(application.icon, application.iconContentType)">
+              <img
+                [src]="'data:' + application.iconContentType + ';base64,' + application.icon"
+                style="max-height: 30px"
+                alt="application image"
+              />
+            </a>
+            <span *ngIf="application.icon">{{ application.iconContentType }}, {{ byteSize(application.icon) }}</span>
+          </td>
+          <td>{{ application.couleur }}</td>
+          <td>{{ application.ordreAffichage }}</td>
+          <td jhiTranslate="{{ 'portailApp.EtatApplication.' + application.etat }}">{{ application.etat }}</td>
+          <td jhiTranslate="{{ 'portailApp.TypeAcces.' + application.typeAcces }}">{{ application.typeAcces }}</td>
+          <td>{{ application.dateCreation | formatMediumDatetime }}</td>
+          <td>{{ application.dateActivation | formatMediumDatetime }}</td>
+          <td>{{ application.dateDesactivation | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="application.categorie">
+              <a [routerLink]="['/application-category', application.categorie?.id, 'view']">{{ application.categorie?.nom }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/application', application.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/application', application.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(application)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

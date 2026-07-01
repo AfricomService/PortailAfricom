@@ -1,0 +1,28 @@
+{
+  "portailApp": {
+    "applicationCategory": {
+      "home": {
+        "title": "ApplicationCategories",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Application Category",
+        "createOrEditLabel": "Créer ou éditer un Application Category",
+        "notFound": "Aucun Application Category trouvé"
+      },
+      "created": "Un nouveau Application Category a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Application Category avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Application Category avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Application Category {{ id }} ?"
+      },
+      "detail": {
+        "title": "Application Category"
+      },
+      "id": "ID",
+      "code": "Code",
+      "nom": "Nom",
+      "description": "Description",
+      "ordreAffichage": "Ordre Affichage",
+      "application": "Application"
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "name": "Application",
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "nom",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "url",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "icon",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "couleur",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ordreAffichage",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "etat",
+      "fieldType": "EtatApplication",
+      "fieldValues": "ACTIF,INACTIF,MAINTENANCE",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "typeAcces",
+      "fieldType": "TypeAcces",
+      "fieldValues": "PUBLIC,RESTREINT",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateCreation",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "dateActivation",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "dateDesactivation",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "applicationCategory",
+      "otherEntityRelationshipName": "application",
+      "relationshipValidateRules": "required",
+      "relationshipName": "categorie",
+      "otherEntityField": "nom"
+    }
+  ],
+  "javadoc": "Une application externe de la société, affichée comme bouton/carte\\nsur le tableau de bord du portail.",
+  "entityTableName": "application",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["portail"],
+  "changelogDate": "20260701094419"
+}

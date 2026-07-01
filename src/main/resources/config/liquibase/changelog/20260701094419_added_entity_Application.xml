@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Application.
+    -->
+    <changeSet id="20260701094419-1" author="jhipster">
+        <createTable tableName="application" remarks="Une application externe de la société, affichée comme bouton/carte\nsur le tableau de bord du portail.">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_application__code" />
+            </column>
+            <column name="nom" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="url" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="icon" type="longblob">
+                <constraints nullable="true" />
+            </column>
+            <column name="icon_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="couleur" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="ordre_affichage" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="etat" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="type_acces" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_creation" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_activation" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_desactivation" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="categorie_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="application" columnName="date_creation" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="application" columnName="date_activation" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="application" columnName="date_desactivation" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20260701094419-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/application.csv"
+                  separator=";"
+                  tableName="application"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="code" type="string"/>
+            <column name="nom" type="string"/>
+            <column name="description" type="string"/>
+            <column name="url" type="string"/>
+            <column name="icon" type="blob"/>
+            <column name="icon_content_type" type="string"/>
+            <column name="couleur" type="string"/>
+            <column name="ordre_affichage" type="numeric"/>
+            <column name="etat" type="string"/>
+            <column name="type_acces" type="string"/>
+            <column name="date_creation" type="date"/>
+            <column name="date_activation" type="date"/>
+            <column name="date_desactivation" type="date"/>
+            <column name="categorie_id" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

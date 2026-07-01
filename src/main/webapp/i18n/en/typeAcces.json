@@ -1,0 +1,9 @@
+{
+  "portailApp": {
+    "TypeAcces": {
+      "null": "",
+      "PUBLIC": "PUBLIC",
+      "RESTREINT": "RESTREINT"
+    }
+  }
+}

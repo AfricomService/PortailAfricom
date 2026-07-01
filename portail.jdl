@@ -1,0 +1,93 @@
+// =============================================
+// Portail — JHipster Domain Language (JDL)
+// Monolithe: portailSociete
+// =============================================
+
+// =============================================
+// ENUMS
+// =============================================
+
+enum EtatApplication {
+    ACTIF,
+    INACTIF,
+    MAINTENANCE
+}
+
+enum TypeAcces {
+    PUBLIC,
+    RESTREINT
+}
+
+// =============================================
+// ENTITIES
+// =============================================
+
+/**
+ * Catégorie permettant de regrouper les applications
+ * dans le tableau de bord (ex: RH, Finance, Support...)
+ */
+entity ApplicationCategory {
+    code String required unique 
+    nom String required 
+    description String 
+    ordreAffichage Integer
+}
+
+/**
+ * Une application externe de la société, affichée comme bouton/carte
+ * sur le tableau de bord du portail.
+ */
+entity Application {
+    code String required unique
+    nom String required
+    description String 
+    url String 
+    icon ImageBlob
+    couleur String
+    ordreAffichage Integer
+    etat EtatApplication required
+    typeAcces TypeAcces required
+    dateCreation ZonedDateTime
+    dateActivation ZonedDateTime
+    dateDesactivation ZonedDateTime
+}
+
+// =============================================
+// RELATIONSHIPS
+// =============================================
+
+// --- Application *-1 ApplicationCategory
+relationship ManyToOne {
+    Application{categorie(nom) required} to ApplicationCategory{application}
+}
+
+// =============================================
+// ENTITY OPTIONS
+// =============================================
+
+dto Application, ApplicationCategory with mapstruct
+
+// =============================================
+// APPLICATION CONFIGURATION
+// =============================================
+
+application {
+    config {
+        baseName portail
+        applicationType monolith
+        packageName com.societe.portail
+        authenticationType oauth2
+        databaseType sql
+        devDatabaseType postgresql
+        prodDatabaseType postgresql
+        buildTool maven
+        clientFramework angular
+        clientTheme flatly
+        clientThemeVariant primary
+        enableTranslation true
+        languages [fr,ar-ly, en]
+        nativeLanguage fr
+        skipUserManagement false
+    }
+    entities *
+}

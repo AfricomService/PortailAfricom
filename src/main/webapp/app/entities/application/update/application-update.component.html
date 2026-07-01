@@ -1,0 +1,237 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-application-heading"
+        data-cy="ApplicationCreateUpdateHeading"
+        jhiTranslate="portailApp.application.home.createOrEditLabel"
+      >
+        Create or edit a Application
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="portailApp.application.code" for="field_code">Code</label>
+          <input type="text" class="form-control" name="code" id="field_code" data-cy="code" formControlName="code" />
+          <div *ngIf="editForm.get('code')!.invalid && (editForm.get('code')!.dirty || editForm.get('code')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('code')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="portailApp.application.nom" for="field_nom">Nom</label>
+          <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+          <div *ngIf="editForm.get('nom')!.invalid && (editForm.get('nom')!.dirty || editForm.get('nom')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nom')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="portailApp.application.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="portailApp.application.url" for="field_url">Url</label>
+          <input type="text" class="form-control" name="url" id="field_url" data-cy="url" formControlName="url" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="portailApp.application.icon" for="field_icon">Icon</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('iconContentType')!.value + ';base64,' + editForm.get('icon')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('icon')!.value"
+              alt="application image"
+            />
+            <div *ngIf="editForm.get('icon')!.value" class="form-text text-danger clearfix">
+              <span class="pull-left">{{ editForm.get('iconContentType')!.value }}, {{ byteSize(editForm.get('icon')!.value) }}</span>
+              <button
+                type="button"
+                (click)="clearInputImage('icon', 'iconContentType', 'file_icon')"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_icon"
+              data-cy="icon"
+              (change)="setFileData($event, 'icon', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="icon" id="field_icon" data-cy="icon" formControlName="icon" />
+          <input type="hidden" class="form-control" name="iconContentType" id="field_iconContentType" formControlName="iconContentType" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="portailApp.application.couleur" for="field_couleur">Couleur</label>
+          <input type="text" class="form-control" name="couleur" id="field_couleur" data-cy="couleur" formControlName="couleur" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="portailApp.application.ordreAffichage" for="field_ordreAffichage"
+            >Ordre Affichage</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="ordreAffichage"
+            id="field_ordreAffichage"
+            data-cy="ordreAffichage"
+            formControlName="ordreAffichage"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="portailApp.application.etat" for="field_etat">Etat</label>
+          <select class="form-control" name="etat" formControlName="etat" id="field_etat" data-cy="etat">
+            <option [ngValue]="null">{{ 'portailApp.EtatApplication.null' | translate }}</option>
+            <option *ngFor="let etatApplication of etatApplicationValues" [value]="etatApplication">
+              {{ 'portailApp.EtatApplication.' + etatApplication | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('etat')!.invalid && (editForm.get('etat')!.dirty || editForm.get('etat')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('etat')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="portailApp.application.typeAcces" for="field_typeAcces">Type Acces</label>
+          <select class="form-control" name="typeAcces" formControlName="typeAcces" id="field_typeAcces" data-cy="typeAcces">
+            <option [ngValue]="null">{{ 'portailApp.TypeAcces.null' | translate }}</option>
+            <option *ngFor="let typeAcces of typeAccesValues" [value]="typeAcces">
+              {{ 'portailApp.TypeAcces.' + typeAcces | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('typeAcces')!.invalid && (editForm.get('typeAcces')!.dirty || editForm.get('typeAcces')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('typeAcces')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="portailApp.application.dateCreation" for="field_dateCreation"
+            >Date Creation</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateCreation"
+              data-cy="dateCreation"
+              type="datetime-local"
+              class="form-control"
+              name="dateCreation"
+              formControlName="dateCreation"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="portailApp.application.dateActivation" for="field_dateActivation"
+            >Date Activation</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateActivation"
+              data-cy="dateActivation"
+              type="datetime-local"
+              class="form-control"
+              name="dateActivation"
+              formControlName="dateActivation"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="portailApp.application.dateDesactivation" for="field_dateDesactivation"
+            >Date Desactivation</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateDesactivation"
+              data-cy="dateDesactivation"
+              type="datetime-local"
+              class="form-control"
+              name="dateDesactivation"
+              formControlName="dateDesactivation"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="portailApp.application.categorie" for="field_categorie">Categorie</label>
+          <select class="form-control" id="field_categorie" data-cy="categorie" name="categorie" formControlName="categorie">
+            <option *ngIf="!editForm.get('categorie')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="
+                applicationCategoryOption.id === editForm.get('categorie')!.value?.id
+                  ? editForm.get('categorie')!.value
+                  : applicationCategoryOption
+              "
+              *ngFor="let applicationCategoryOption of applicationCategoriesSharedCollection; trackBy: trackApplicationCategoryById"
+            >
+              {{ applicationCategoryOption.nom }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['categorie'])!.invalid && (editForm.get(['categorie'])!.dirty || editForm.get(['categorie'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['categorie'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
