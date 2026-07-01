@@ -43,13 +43,11 @@ public class LogoutResource {
 
         String originUrl = request.getHeader(HttpHeaders.ORIGIN);
 
-        if (logoutUrl.indexOf("/protocol") > -1) {
-            logoutUrl.append("?redirect_uri=").append(originUrl);
-        } else if (logoutUrl.indexOf("auth0.com") > -1) {
+        if (logoutUrl.indexOf("auth0.com") > -1) {
             // Auth0
             logoutUrl.append("?client_id=").append(this.registration.getClientId()).append("&returnTo=").append(originUrl);
         } else {
-            // Okta
+            // Keycloak (RP-Initiated Logout standard OIDC) et Okta
             logoutUrl.append("?id_token_hint=").append(idToken.getTokenValue()).append("&post_logout_redirect_uri=").append(originUrl);
         }
 
