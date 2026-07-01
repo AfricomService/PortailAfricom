@@ -201,7 +201,8 @@ public class UserService {
             // special handling for Auth0
             user.setEmail(username);
         } else {
-            user.setEmail(sub);
+            // pas d'email fourni par Keycloak : on laisse le champ vide
+            user.setEmail(null);
         }
         if (details.get("langKey") != null) {
             user.setLangKey((String) details.get("langKey"));
