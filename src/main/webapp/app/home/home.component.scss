@@ -167,19 +167,46 @@
   flex-direction: column;
   gap: 0.55rem;
   overflow: hidden;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.25s ease;
   animation: cardIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: calc(var(--i, 0) * 60ms);
 
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, color-mix(in srgb, var(--accent, #1f2b4d) 14%, transparent) 45%, transparent 60%);
+    transform: translateX(-120%);
+    transition: transform 0.6s ease;
+    pointer-events: none;
+  }
+
   &:hover {
-    transform: translateY(-4px);
-    border-color: transparent;
-    box-shadow: 0 16px 32px rgba(22, 27, 46, 0.12);
+    transform: translateY(-6px) scale(1.015);
+    border-color: color-mix(in srgb, var(--accent, #1f2b4d) 45%, transparent);
+    box-shadow: 0 20px 40px -8px color-mix(in srgb, var(--accent, #1f2b4d) 38%, transparent), 0 4px 10px rgba(22, 27, 46, 0.06);
+
+    &::after {
+      transform: translateX(120%);
+    }
+
+    .app-card-logo {
+      transform: scale(1.1) rotate(-6deg);
+      background: color-mix(in srgb, var(--accent, #1f2b4d) 16%, #ffffff);
+    }
+
+    .app-card-name {
+      color: var(--accent, #1f2b4d);
+    }
 
     .app-card-open {
       opacity: 1;
       transform: translateX(0);
     }
+  }
+
+  &:active {
+    transform: translateY(-2px) scale(0.99);
   }
 }
 
@@ -188,21 +215,22 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: var(--accent, #1f2b4d);
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent, #1f2b4d), color-mix(in srgb, var(--accent, #1f2b4d) 40%, #ffffff));
 }
 
 .app-card-logo {
   width: 46px;
   height: 46px;
   border-radius: 10px;
-  background: #f6f7fa;
+  background: color-mix(in srgb, var(--accent, #1f2b4d) 10%, #f6f7fa);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   color: var(--accent, #1f2b4d);
   font-size: 1.2rem;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
 
   img {
     width: 100%;
@@ -216,6 +244,7 @@
   font-weight: 600;
   font-size: 1rem;
   color: #161b2e;
+  transition: color 0.25s ease;
 }
 
 .app-card-desc {
