@@ -6,6 +6,7 @@
       "message": "قمت بتسجيل الدخول كمستخدم \"{{username}}\"."
     },
     "question": "إذا كان لديك أي سؤال حول JHipster:",
+    "noApplication": "لا توجد تطبيقات متاحة حاليا.",
     "link": {
       "homepage": "JHipster homepage",
       "stackoverflow": "JHipster on Stack Overflow",
