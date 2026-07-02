@@ -45,7 +45,7 @@
           class="app-card"
           *ngFor="let app of filteredApplications; let i = index; trackBy: trackApp"
           [style.--i]="i"
-          [style.--accent]="app.couleur || '#1F2B4D'"
+          [style.--accent]="app.couleur || '#2563EB'"
           (click)="openApplication(app)"
         >
           <span class="app-card-accent"></span>
