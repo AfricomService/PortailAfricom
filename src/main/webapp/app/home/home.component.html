@@ -13,6 +13,24 @@
         <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message" [translateValues]="{ username: account.login }"
           >You are logged in as user "{{ account.login }}".</span
         >
+
+        <div class="row mt-4" *ngIf="applications.length > 0">
+          <div class="col-md-3 mb-3" *ngFor="let app of applications">
+            <button
+              type="button"
+              class="btn btn-primary w-100"
+              [style.background-color]="app.couleur || null"
+              (click)="openApplication(app)"
+              [title]="app.description"
+            >
+              {{ app.nom }}
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-3" *ngIf="applications.length === 0">
+          <span jhiTranslate="home.noApplication">Aucune application disponible pour le moment.</span>
+        </div>
       </div>
 
       <div class="alert alert-warning" *ngSwitchCase="false">
