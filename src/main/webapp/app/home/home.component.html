@@ -1,5 +1,6 @@
-<div class="portal-wrapper">
-  <!-- Barre d'icônes en haut à droite -->
+<div class="portal">
+  <div class="portal-grain" aria-hidden="true"></div>
+
   <div class="top-bar">
     <div ngbDropdown class="lang-dropdown" *ngIf="languages && languages.length > 1">
       <button ngbDropdownToggle class="icon-btn" id="lang-toggle" [title]="'global.menu.language' | translate">
@@ -23,50 +24,56 @@
     </button>
   </div>
 
-  <!-- Contenu principal -->
-  <div class="portal-content">
-    <div [ngSwitch]="account !== null">
-      <!-- Utilisateur connecté -->
-      <div class="welcome-section" *ngSwitchCase="true">
-        <h1 class="welcome-title">
-          <span jhiTranslate="home.title">Bienvenue</span>, <span class="welcome-name">{{ fullName }}</span>
+  <div [ngSwitch]="account !== null">
+    <main class="workspace" *ngSwitchCase="true">
+      <header class="workspace-header">
+        <span class="eyebrow" jhiTranslate="home.eyebrow">Espace de travail</span>
+        <h1 class="workspace-title">
+          <span jhiTranslate="{{ greetingKey }}">Bonjour</span>, <span class="workspace-name">{{ fullName }}</span>
         </h1>
-        <p class="welcome-subtitle" jhiTranslate="home.subtitle">Ceci est votre page d'accueil</p>
+        <p class="workspace-subtitle" jhiTranslate="home.subtitle">Retrouvez vos applications ci-dessous</p>
 
-        <div class="apps-grid" *ngIf="applications.length > 0">
-          <div class="app-card" *ngFor="let app of applications; trackBy: trackApp" (click)="openApplication(app)">
-            <div class="app-card-logo">
-              <img *ngIf="app.icon" [src]="'data:' + app.iconContentType + ';base64,' + app.icon" [alt]="app.nom" />
-              <fa-icon *ngIf="!app.icon" icon="th-large" class="default-icon"></fa-icon>
-            </div>
-            <div class="app-card-body">
-              <h3 class="app-card-title">{{ app.nom }}</h3>
-              <p class="app-card-description">{{ app.description }}</p>
-            </div>
-          </div>
+        <div class="search-bar" *ngIf="applications.length > 3">
+          <fa-icon icon="search"></fa-icon>
+          <input type="text" [placeholder]="'home.search' | translate" [value]="searchTerm" (input)="onSearch($any($event.target).value)" />
         </div>
+      </header>
 
-        <div class="empty-state" *ngIf="applications.length === 0 && !isLoading">
-          <fa-icon icon="folder-open" size="2x"></fa-icon>
-          <p jhiTranslate="home.noApplication">Aucune application disponible pour le moment.</p>
-        </div>
+      <section class="apps-grid" *ngIf="filteredApplications.length > 0">
+        <button
+          type="button"
+          class="app-card"
+          *ngFor="let app of filteredApplications; let i = index; trackBy: trackApp"
+          [style.--i]="i"
+          [style.--accent]="app.couleur || '#1F2B4D'"
+          (click)="openApplication(app)"
+        >
+          <span class="app-card-accent"></span>
+          <span class="app-card-logo">
+            <img *ngIf="app.icon" [src]="'data:' + app.iconContentType + ';base64,' + app.icon" [alt]="app.nom" />
+            <fa-icon *ngIf="!app.icon" icon="th-large"></fa-icon>
+          </span>
+          <span class="app-card-name">{{ app.nom }}</span>
+          <span class="app-card-desc">{{ app.description }}</span>
+          <span class="app-card-open" jhiTranslate="home.open">Ouvrir <fa-icon icon="arrow-right"></fa-icon></span>
+        </button>
+      </section>
+
+      <div class="empty-state" *ngIf="filteredApplications.length === 0 && !isLoading">
+        <fa-icon icon="folder-open"></fa-icon>
+        <p jhiTranslate="home.noApplication">Aucune application disponible pour le moment.</p>
       </div>
+    </main>
 
-      <!-- Utilisateur non connecté -->
-      <div class="login-section" *ngSwitchCase="false">
-        <div class="login-card">
-          <span class="hipster"></span>
-          <h1 class="display-4" jhiTranslate="home.title">Bienvenue, Java Hipster !</h1>
-          <p class="lead" jhiTranslate="home.subtitle">Ceci est votre page d'accueil</p>
-          <button class="btn btn-primary btn-lg mt-3" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">
-            Se connecter
-          </button>
-        </div>
-      </div>
-    </div>
+    <main class="gate" *ngSwitchCase="false">
+      <div class="gate-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <span class="eyebrow" jhiTranslate="home.eyebrow">Espace de travail</span>
+      <h1 class="gate-title" jhiTranslate="home.title">Bienvenue dans le Portail</h1>
+      <p class="gate-subtitle" jhiTranslate="home.subtitle">Retrouvez vos applications ci-dessous</p>
+      <button class="gate-btn" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">Se connecter</button>
+    </main>
   </div>
 
-  <!-- Bouton flottant Entités (bas droite) -->
   <div ngbDropdown dropdownClass="dropup" class="entities-fab" *ngIf="account">
     <button ngbDropdownToggle class="fab-btn" id="entities-toggle" [title]="'global.menu.entities.main' | translate">
       <fa-icon icon="th-list"></fa-icon>

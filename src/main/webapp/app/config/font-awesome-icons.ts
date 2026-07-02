@@ -1,5 +1,6 @@
 import {
   faArrowLeft,
+  faArrowRight,
   faAsterisk,
   faBan,
   faBars,
@@ -12,6 +13,8 @@ import {
   faDatabase,
   faEye,
   faFlag,
+  faFolderOpen,
+  faGlobe,
   faHeart,
   faHome,
   faList,
@@ -29,6 +32,7 @@ import {
   faSync,
   faTachometerAlt,
   faTasks,
+  faThLarge,
   faThList,
   faTimes,
   faTrashAlt,
@@ -42,6 +46,7 @@ import {
 
 export const fontAwesomeIcons = [
   faArrowLeft,
+  faArrowRight,
   faAsterisk,
   faBan,
   faBars,
@@ -54,6 +59,8 @@ export const fontAwesomeIcons = [
   faDatabase,
   faEye,
   faFlag,
+  faFolderOpen,
+  faGlobe,
   faHeart,
   faHome,
   faList,
@@ -71,6 +78,7 @@ export const fontAwesomeIcons = [
   faSync,
   faTachometerAlt,
   faTasks,
+  faThLarge,
   faThList,
   faTimes,
   faTrashAlt,

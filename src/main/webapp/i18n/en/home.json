@@ -1,7 +1,15 @@
 {
   "home": {
-    "title": "Welcome, Java Hipster!",
+    "title": "Welcome to the Portal",
+    "eyebrow": "Workspace",
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
     "subtitle": "This is your homepage",
+    "search": "Search an application...",
+    "open": "Open",
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },

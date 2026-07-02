@@ -1,7 +1,15 @@
 {
   "home": {
-    "title": "Bienvenue, Java Hipster !",
+    "title": "Bienvenue dans le Portail",
+    "eyebrow": "Espace de travail",
+    "greeting": {
+      "morning": "Bonjour",
+      "afternoon": "Bon après-midi",
+      "evening": "Bonsoir"
+    },
     "subtitle": "Ceci est votre page d'accueil",
+    "search": "Rechercher une application...",
+    "open": "Ouvrir",
     "logged": {
       "message": "Vous êtes connecté en tant que \"{{username}}\"."
     },

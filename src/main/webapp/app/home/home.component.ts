@@ -18,8 +18,10 @@ import { LANGUAGES } from 'app/config/language.constants';
 export class HomeComponent implements OnInit {
   account: Account | null = null;
   applications: IApplication[] = [];
+  filteredApplications: IApplication[] = [];
   languages = LANGUAGES;
   isLoading = false;
+  searchTerm = '';
 
   constructor(
     private accountService: AccountService,
@@ -48,15 +50,35 @@ export class HomeComponent implements OnInit {
     return `${prenom} ${nom}`.trim() || this.account.login;
   }
 
+  get greetingKey(): string {
+    const hour = new Date().getHours();
+    if (hour < 12) {
+      return 'home.greeting.morning';
+    }
+    if (hour < 18) {
+      return 'home.greeting.afternoon';
+    }
+    return 'home.greeting.evening';
+  }
+
   loadApplications(): void {
     this.isLoading = true;
     this.applicationService.query().subscribe({
       next: res => {
         this.applications = (res.body ?? []).filter(app => app.etat === 'ACTIF');
+        this.filteredApplications = this.applications;
         this.isLoading = false;
       },
       error: () => (this.isLoading = false),
     });
+  }
+
+  onSearch(term: string): void {
+    this.searchTerm = term;
+    const q = term.trim().toLowerCase();
+    this.filteredApplications = !q
+      ? this.applications
+      : this.applications.filter(app => app.nom?.toLowerCase().includes(q) || app.description?.toLowerCase().includes(q));
   }
 
   openApplication(app: IApplication): void {
