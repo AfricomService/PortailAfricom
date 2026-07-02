@@ -31,6 +31,21 @@
   z-index: 1000;
 }
 
+.brand {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.brand-logo {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
 .icon-btn {
   width: 40px;
   height: 40px;

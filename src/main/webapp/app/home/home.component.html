@@ -1,6 +1,10 @@
 <div class="portal">
   <div class="portal-grain" aria-hidden="true"></div>
 
+  <div class="brand">
+    <img src="content/images/logoPortail.png" alt="Portail" class="brand-logo" />
+  </div>
+
   <div class="top-bar">
     <div ngbDropdown class="lang-dropdown" *ngIf="languages && languages.length > 1">
       <button ngbDropdownToggle class="icon-btn" id="lang-toggle" [title]="'global.menu.language' | translate">
