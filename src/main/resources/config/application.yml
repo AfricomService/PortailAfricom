@@ -130,11 +130,11 @@ spring:
       client:
         provider:
           oidc:
-            issuer-uri: http://172.30.1.111:9080/realms/AfricomProd
+            issuer-uri: http://172.30.1.111:9080/realms/Africom
         registration:
           oidc:
             client-id: portail
-            client-secret: JpMu3isHSUOjSwpLoOgYvLahLj7ooorf
+            client-secret: gG3GQmzCtnRv4lg4REH4OPn8R9QJDClE
             scope: openid,profile,email
             redirect-uri: 'http://172.30.1.113/login/oauth2/code/oidc'
 
