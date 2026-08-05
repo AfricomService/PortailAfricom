@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   languages = LANGUAGES;
   isLoading = false;
   searchTerm = '';
+  isAdmin = false;
 
   constructor(
     private accountService: AccountService,
@@ -33,13 +34,16 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.accountService.identity().subscribe(account => {
-      this.account = account;
-      if (account) {
-        this.loadApplications();
-      }
-    });
-  }
+  this.accountService.identity().subscribe(account => {
+    this.account = account;
+
+    this.isAdmin = this.accountService.hasAnyAuthority('ROLE_ADMIN');
+
+    if (account) {
+      this.loadApplications();
+    }
+  });
+}
 
   get fullName(): string {
     if (!this.account) {
