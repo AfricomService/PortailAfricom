@@ -136,7 +136,7 @@ spring:
             client-id: portail
             client-secret: gG3GQmzCtnRv4lg4REH4OPn8R9QJDClE
             scope: openid,profile,email
-            redirect-uri: 'http://172.30.1.113/login/oauth2/code/oidc'
+            redirect-uri: 'http://172.30.1.111/login/oauth2/code/oidc'
 
 server:
   servlet:
