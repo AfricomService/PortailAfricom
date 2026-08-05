@@ -30,28 +30,43 @@ public class LogoutResource {
      * @param idToken the ID token.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and a body with a global logout URL.
      */
-    @PostMapping("/api/logout")
-    public ResponseEntity<?> logout(HttpServletRequest request, @AuthenticationPrincipal(expression = "idToken") OidcIdToken idToken) {
-        StringBuilder logoutUrl = new StringBuilder();
-
-        String issuerUri = this.registration.getProviderDetails().getIssuerUri();
-        if (issuerUri.contains("auth0.com")) {
-            logoutUrl.append(issuerUri.endsWith("/") ? issuerUri + "v2/logout" : issuerUri + "/v2/logout");
-        } else {
-            logoutUrl.append(this.registration.getProviderDetails().getConfigurationMetadata().get("end_session_endpoint").toString());
-        }
-
-        String originUrl = request.getHeader(HttpHeaders.ORIGIN);
-
-        if (logoutUrl.indexOf("auth0.com") > -1) {
-            // Auth0
-            logoutUrl.append("?client_id=").append(this.registration.getClientId()).append("&returnTo=").append(originUrl);
-        } else {
-            // Keycloak (RP-Initiated Logout standard OIDC) et Okta
-            logoutUrl.append("?id_token_hint=").append(idToken.getTokenValue()).append("&post_logout_redirect_uri=").append(originUrl);
-        }
-
-        request.getSession().invalidate();
-        return ResponseEntity.ok().body(Map.of("logoutUrl", logoutUrl.toString()));
+@PostMapping("/api/logout")
+public ResponseEntity<?> logout(HttpServletRequest request, 
+        @AuthenticationPrincipal(expression = "idToken") OidcIdToken idToken) {
+    
+    StringBuilder logoutUrl = new StringBuilder();
+    String issuerUri = this.registration.getProviderDetails().getIssuerUri();
+    
+    if (issuerUri.contains("auth0.com")) {
+        logoutUrl.append(issuerUri.endsWith("/") ? issuerUri + "v2/logout" : issuerUri + "/v2/logout");
+    } else {
+        logoutUrl.append(this.registration.getProviderDetails()
+            .getConfigurationMetadata().get("end_session_endpoint").toString());
     }
+
+    // Construire l'URL de l'application au lieu de se fier au header Origin
+    String scheme = request.getScheme();
+    String serverName = request.getServerName();
+    int serverPort = request.getServerPort();
+    
+    StringBuilder appUrl = new StringBuilder(scheme).append("://").append(serverName);
+    if (serverPort != 80 && serverPort != 443) {
+        appUrl.append(":").append(serverPort);
+    }
+    appUrl.append("/"); // ← slash final important !
+    
+    String postLogoutRedirectUri = appUrl.toString();
+
+    if (logoutUrl.indexOf("auth0.com") > -1) {
+        logoutUrl.append("?client_id=").append(this.registration.getClientId())
+                 .append("&returnTo=").append(postLogoutRedirectUri);
+    } else {
+        logoutUrl.append("?id_token_hint=").append(idToken.getTokenValue())
+                 .append("&post_logout_redirect_uri=")
+                 .append(URLEncoder.encode(postLogoutRedirectUri, StandardCharsets.UTF_8));
+    }
+
+    request.getSession().invalidate();
+    return ResponseEntity.ok().body(Map.of("logoutUrl", logoutUrl.toString()));
+}
 }
