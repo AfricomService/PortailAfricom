@@ -78,7 +78,7 @@
     </main>
   </div>
 
-  <div ngbDropdown dropdownClass="dropup" class="entities-fab" *ngIf="account">
+  <div ngbDropdown dropdownClass="dropup" class="entities-fab" *ngIf="account && isAdmin">
     <button ngbDropdownToggle class="fab-btn" id="entities-toggle" [title]="'global.menu.entities.main' | translate">
       <fa-icon icon="th-list"></fa-icon>
     </button>
