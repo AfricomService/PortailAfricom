@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * REST controller for managing global OIDC logout.
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class LogoutResource {
 
     private final ClientRegistration registration;
+
+    @Value("${application.public-url}")
+    private String publicUrl;
 
     public LogoutResource(ClientRegistrationRepository registrations) {
         this.registration = registrations.findByRegistrationId("oidc");
@@ -46,18 +50,8 @@ public class LogoutResource {
                 .getConfigurationMetadata().get("end_session_endpoint").toString());
         }
 
-        // Construire l'URL de l'application au lieu de se fier au header Origin
-        String scheme = request.getScheme();
-        String serverName = request.getServerName();
-        int serverPort = request.getServerPort();
-        
-        StringBuilder appUrl = new StringBuilder(scheme).append("://").append(serverName);
-        if (serverPort != 80 && serverPort != 443) {
-            appUrl.append(":").append(serverPort);
-        }
-        appUrl.append("/"); // ← slash final important !
-        
-        String postLogoutRedirectUri = appUrl.toString();
+        // URL publique fixée en config, indépendante du proxy/port interne
+        String postLogoutRedirectUri = publicUrl.endsWith("/") ? publicUrl : publicUrl + "/";
 
         if (logoutUrl.indexOf("auth0.com") > -1) {
             logoutUrl.append("?client_id=").append(this.registration.getClientId())
