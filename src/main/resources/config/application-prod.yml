@@ -105,4 +105,5 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+  public-url: http://172.30.1.111/
