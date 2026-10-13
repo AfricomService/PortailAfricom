@@ -130,7 +130,7 @@ spring:
       client:
         provider:
           oidc:
-            issuer-uri: http://172.30.1.113:9080/realms/AfricomProd
+            issuer-uri: http://testafricom/auth/realms/AfricomProd
         registration:
           oidc:
             client-id: portail
