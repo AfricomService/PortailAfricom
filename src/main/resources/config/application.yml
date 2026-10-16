@@ -130,7 +130,7 @@ spring:
       client:
         provider:
           oidc:
-            issuer-uri: http://appafricom/auth/realms/Africom
+            issuer-uri: https://appafricom/auth/realms/Africom
         registration:
           oidc:
             client-id: portail
